@@ -6,6 +6,7 @@ package antrianpasien;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,23 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         inisialisasi();
     }
     
+    private void tambahAntrian(){
+        nomor++;
+        String antr = "Antrian "+nomor;
+        antrian.add(antr);
+        String cvt = String.valueOf(antrian.size());
+        labelJumlah.setText(cvt);
+        labelAntrian.setText(""+antrian.peek());
+        labelTotal.setText(""+nomor);
+        txtDaftarAntrian.append(antr + "\n");
+        
+        txtAtas1.setText("Hari Ini");
+        txtAtas2.setText("Nomor Antrian");
+        txtTengah1.setText("  " + nomor);
+        txtBawah1.setText("Silahkan menunggu " + cvt + " Antrian Lagi ");
+        txtBawah2.setText("Mohon untuk bersabar");
+    }
+    
     private void inisialisasi(){
         labelJumlah.setText("0");
         labelTotal.setText("0");
@@ -28,6 +46,7 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         txtAtas.setText("Rumah Sakit");
         txtTengah.setText("Islam Harapan Anda");
         txtBawah.setText("Kota Tegal");
+        
         txtAtas1.setText("Hari Ini");
         txtAtas2.setText("Nomor Antrian");
         txtTengah1.setText("--------");
@@ -35,6 +54,21 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         txtBawah2.setText("--------");
     }
 
+        private void antrianSelanjutnya(){
+        if(antrian.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Ambil Nomor antrian terlebih dahulu !");
+        }
+        txtDaftarAntrian.setText("");
+        antrian.poll();
+        antrian.forEach((Object element) -> {
+            txtDaftarAntrian.append("" + element + "\n");
+        });
+        if(antrian.isEmpty()){
+            labelAntrian.setText("-----");
+        }else{
+            labelAntrian.setText(""+antrian.peek());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,7 +81,7 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDaftarAntrian = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -76,9 +110,9 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Daftar Antrian", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Calibri", 1, 18))); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDaftarAntrian.setColumns(20);
+        txtDaftarAntrian.setRows(5);
+        jScrollPane1.setViewportView(txtDaftarAntrian);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,6 +172,11 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         btnProsesAntri.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnProsesAntri.setForeground(new java.awt.Color(255, 255, 255));
         btnProsesAntri.setText("Lanjut Ke Antrian Selanjutnya");
+        btnProsesAntri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProsesAntriActionPerformed(evt);
+            }
+        });
 
         txtAtas1.setText("txtAtas1");
 
@@ -185,6 +224,11 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         btnAmbilAntri.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         btnAmbilAntri.setForeground(new java.awt.Color(255, 255, 255));
         btnAmbilAntri.setText("Ambil Antrian");
+        btnAmbilAntri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAmbilAntriActionPerformed(evt);
+            }
+        });
 
         labelJumlah.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelJumlah.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -297,6 +341,16 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAmbilAntriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmbilAntriActionPerformed
+        // TODO add your handling code here:
+        tambahAntrian();
+    }//GEN-LAST:event_btnAmbilAntriActionPerformed
+
+    private void btnProsesAntriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProsesAntriActionPerformed
+        // TODO add your handling code here:
+        antrianSelanjutnya();
+    }//GEN-LAST:event_btnProsesAntriActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -344,7 +398,6 @@ public class aplikasiAntrian extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelAntrian;
     private javax.swing.JLabel labelJumlah;
     private javax.swing.JLabel labelTotal;
@@ -354,6 +407,7 @@ public class aplikasiAntrian extends javax.swing.JFrame {
     private javax.swing.JLabel txtBawah;
     private javax.swing.JLabel txtBawah1;
     private javax.swing.JLabel txtBawah2;
+    private javax.swing.JTextArea txtDaftarAntrian;
     private javax.swing.JLabel txtTengah;
     private javax.swing.JLabel txtTengah1;
     // End of variables declaration//GEN-END:variables

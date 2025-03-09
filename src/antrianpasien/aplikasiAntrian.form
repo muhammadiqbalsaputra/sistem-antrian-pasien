@@ -110,7 +110,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextArea1">
+                <Component class="javax.swing.JTextArea" name="txtDaftarAntrian">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
@@ -296,6 +296,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Lanjut Ke Antrian Selanjutnya"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProsesAntriActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel7">
 
@@ -379,6 +382,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ambil Antrian"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAmbilAntriActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelJumlah">
               <Properties>

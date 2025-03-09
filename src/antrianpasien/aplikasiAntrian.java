@@ -13,40 +13,53 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class aplikasiAntrian extends javax.swing.JFrame {
+// Konstanta
 
-    Queue<Object> antrian = new LinkedList<>();
-    int nomor = 0;
+    private static final String NAMA_RUMAH_SAKIT = "Rumah Sakit Islam Harapan Anda";
+    private static final String LOKASI = "Kota Tegal";
+
+    // Variabel
+    private int nomor = 0;
+    private final Queue<String> antrian = new LinkedList<>();
+    private final String[] informasi = new String[3]; // Array untuk menyimpan informasi tambahan
+
     public aplikasiAntrian() {
         initComponents();
         inisialisasi();
     }
-    
-    private void tambahAntrian(){
+
+    private void tambahAntrian() {
         nomor++;
-        String antr = "Antrian "+nomor;
+        String antr = "Antrian " + nomor;
         antrian.add(antr);
-        String cvt = String.valueOf(antrian.size());
-        labelJumlah.setText(cvt);
-        labelAntrian.setText(""+antrian.peek());
-        labelTotal.setText(""+nomor);
+
+        // Operator
+        labelJumlah.setText(String.valueOf(antrian.size()));
+        labelAntrian.setText(antrian.peek());
+        labelTotal.setText(String.valueOf(nomor));
         txtDaftarAntrian.append(antr + "\n");
-        
-        txtAtas1.setText("Hari Ini");
-        txtAtas2.setText("Nomor Antrian");
+
+        // Array
+        informasi[0] = "Hari Ini";
+        informasi[1] = "Nomor Antrian";
+        informasi[2] = "Silahkan menunggu " + antrian.size() + " Antrian Lagi ";
+
+        txtAtas1.setText(informasi[0]);
+        txtAtas2.setText(informasi[1]);
         txtTengah1.setText("  " + nomor);
-        txtBawah1.setText("Silahkan menunggu " + cvt + " Antrian Lagi ");
+        txtBawah1.setText(informasi[2]);
         txtBawah2.setText("Mohon untuk bersabar");
     }
-    
-    private void inisialisasi(){
+
+    private void inisialisasi() {
         labelJumlah.setText("0");
         labelTotal.setText("0");
         labelAntrian.setText("-----");
-        
-        txtAtas.setText("Rumah Sakit");
-        txtTengah.setText("Islam Harapan Anda");
-        txtBawah.setText("Kota Tegal");
-        
+
+        txtAtas.setText(NAMA_RUMAH_SAKIT);
+        txtTengah.setText(NAMA_RUMAH_SAKIT);
+        txtBawah.setText(LOKASI);
+
         txtAtas1.setText("Hari Ini");
         txtAtas2.setText("Nomor Antrian");
         txtTengah1.setText("--------");
@@ -54,21 +67,22 @@ public class aplikasiAntrian extends javax.swing.JFrame {
         txtBawah2.setText("--------");
     }
 
-        private void antrianSelanjutnya(){
-        if(antrian.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Ambil Nomor antrian terlebih dahulu !");
+    private void antrianSelanjutnya() {
+        if (antrian.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ambil Nomor antrian terlebih dahulu!");
+            return;
         }
+
+        antrian.poll(); 
         txtDaftarAntrian.setText("");
-        antrian.poll();
-        antrian.forEach((Object element) -> {
-            txtDaftarAntrian.append("" + element + "\n");
-        });
-        if(antrian.isEmpty()){
-            labelAntrian.setText("-----");
-        }else{
-            labelAntrian.setText(""+antrian.peek());
+
+        for (String element : antrian) { // Menggunakan loop 
+            txtDaftarAntrian.append(element + "\n");
         }
+
+        labelAntrian.setText(antrian.isEmpty() ? "-----" : antrian.peek());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
